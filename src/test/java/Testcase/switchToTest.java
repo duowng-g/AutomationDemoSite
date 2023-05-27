@@ -1,0 +1,47 @@
+package Testcase;
+
+import Base.baseSetUp;
+import Common.PropertiesFile;
+import Common.ValidateHelper;
+import Page.registerPage;
+import Page.switchToPage;
+import Page.widgetsPage;
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import java.awt.*;
+
+public class switchToTest extends baseSetUp {
+    private WebDriver driver;
+    public ValidateHelper validateHelper;
+    public registerPage registerPage;
+    public switchToPage switchToPage;
+    @BeforeClass
+    public void setUp(){
+        driver = new baseSetUp().setDriver("chrome");
+    }
+    @Test(priority = 1)
+    public void testRegister() throws InterruptedException, AWTException {
+        PropertiesFile.setPropertiesFile();
+        registerPage = new registerPage(driver);
+        driver.navigate().to("https://demo.automationtesting.in/Register.html");
+        Thread.sleep(2000);
+        switchToPage switchToPage = registerPage.Register(PropertiesFile.getPropValue("firstname"),PropertiesFile.getPropValue("lastname"), PropertiesFile.getPropValue("Address"),PropertiesFile.getPropValue("emailaddress"),PropertiesFile.getPropValue("Phone"),PropertiesFile.getPropValue("skill"),PropertiesFile.getPropValue("Country"),PropertiesFile.getPropValue("year"),PropertiesFile.getPropValue("month"),PropertiesFile.getPropValue("day"),PropertiesFile.getPropValue("Password"));
+    }
+    @Test(priority = 2)
+    public void testAlerts() throws InterruptedException {
+        switchToPage = new switchToPage(driver);
+        switchToPage.handleAlerts();
+    }
+    @Test(priority = 3)
+    public void testWindows() throws InterruptedException {
+        switchToPage = new switchToPage(driver);
+        switchToPage.handleWindows();
+    }
+    @Test(priority = 4)
+    public void testFrames() throws InterruptedException {
+        switchToPage = new switchToPage(driver);
+        widgetsPage widgetsPage= switchToPage.handleFrames();
+    }
+}
